@@ -36,13 +36,28 @@ def calculate_total(records):
 
 records = []
 
-for i in range(2):
-    print(f"\n=== 第 {i + 1} 筆記帳 ===")
+while True:
+    print("\n==== 記帳系統 ====")
+    print("1. 新增記帳")
+    print("2. 查看記帳")
+    print("3. 查看總支出")
+    print("4. 離開")
 
-    input_record(records)
+    choice = input("\n請選擇：")
 
-show_records(records)
+    if choice == "1":
+        input_record(records)
 
-total = calculate_total(records)
+    elif choice == "2":
+        show_records(records)
 
-print(f"總支出：{total}元")
+    elif choice == "3":
+        total = calculate_total(records)
+        print(f"總支出:{total}")
+
+    elif choice == "4":
+        print("離開程式")
+        break
+
+    else:
+        print("\n無效的選擇，請重新輸入。")
