@@ -48,20 +48,21 @@ def delete_record(records):
         print(f"支出:{record['expense']}")
         print(f"備註:{record['remark']}")
         print()
+    while True:
+        try:
+            choice = int(input("請輸入要刪除的編號："))
 
-    try:
-        choice = int(input("請輸入要刪除的編號："))
+        except ValueError:
+            print("請輸入數字。")
+            continue
 
-    except ValueError:
-        print("請輸入數字。")
-        return
-
-    if choice == 1 and choice <= len(records):
-        index = choice - 1
-        del records[index]
-        print("刪除成功!")
-    else:
-        print("無效的編號。")
+        if choice >= 1 and choice <= len(records):
+            index = choice - 1
+            del records[index]
+            print("刪除成功!")
+            break
+        else:
+            print("無效的編號。")
 
 
 records = []
