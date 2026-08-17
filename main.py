@@ -1,6 +1,3 @@
-from test import delete_record
-
-
 def input_record(records):
     date = input("請輸入日期：")
     category = input("請輸入類別：")
@@ -45,20 +42,24 @@ def delete_record(records):
     print("\n所有記帳資料：")
 
     for i, record in enumerate(records):
-        print(f"{i + 1} 筆")
+        print(f"第 {i + 1} 筆")
         print(f"日期：{record['date']}")
         print(f"類別:{record['category']}")
         print(f"支出:{record['expense']}")
         print(f"備註:{record['remark']}")
         print()
 
-    choice = int(input("請輸入要刪除的編號："))
+    try:
+        choice = int(input("請輸入要刪除的編號："))
+
+    except ValueError:
+        print("請輸入數字。")
+        return
 
     if choice == 1 and choice <= len(records):
         index = choice - 1
         del records[index]
         print("刪除成功!")
-
     else:
         print("無效的編號。")
 
@@ -71,7 +72,7 @@ while True:
     print("2. 查看記帳")
     print("3. 查看總支出")
     print("4. 刪除記帳")
-    print("4. 離開")
+    print("5. 離開")
 
     choice = input("\n請選擇：")
 
