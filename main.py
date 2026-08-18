@@ -43,14 +43,20 @@ def delete_record(records):
 
     for i, record in enumerate(records):
         print(f"第 {i + 1} 筆")
-        print(f"日期：{record['date']}")
+        print(f"日期:{record['date']}")
         print(f"類別:{record['category']}")
         print(f"支出:{record['expense']}")
         print(f"備註:{record['remark']}")
         print()
     while True:
+        choice = input("請輸入記帳編號，或按 q 取消刪除：")
+
+        if choice == "q":
+            print("取消刪除。")
+            return
+
         try:
-            choice = int(input("請輸入要刪除的編號："))
+            choice = int(choice)
 
         except ValueError:
             print("請輸入數字。")
@@ -63,6 +69,7 @@ def delete_record(records):
             break
         else:
             print("無效的編號。")
+            continue
 
 
 records = []
@@ -85,7 +92,7 @@ while True:
 
     elif choice == "3":
         total = calculate_total(records)
-        print(f"總支出:{total}")
+        print(f"總支出:{total}元")
 
     elif choice == "4":
         delete_record(records)
