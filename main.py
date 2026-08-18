@@ -1,7 +1,20 @@
 def input_record(records):
     date = input("請輸入日期：")
     category = input("請輸入類別：")
-    expense = int(input("請輸入支出："))
+
+    while True:
+        try:
+            expense = int(input("請輸入支出："))
+        except ValueError:
+            print("輸入無效，請輸入數字。")
+            continue
+
+        if expense < 0:
+            print("支出不能是負數")
+            continue
+
+        break
+
     remark = input("請輸入備註：")
 
     record = {
