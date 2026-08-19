@@ -2,18 +2,7 @@ def input_record(records):
     date = input("請輸入日期：")
     category = input("請輸入類別：")
 
-    while True:
-        try:
-            expense = int(input("請輸入支出："))
-        except ValueError:
-            print("輸入無效，請輸入數字。")
-            continue
-
-        if expense < 0:
-            print("支出不能是負數")
-            continue
-
-        break
+    expense = input_expense()
 
     remark = input("請輸入備註：")
 
@@ -23,7 +12,25 @@ def input_record(records):
         "expense": expense,
         "remark": remark
     }
+
     records.append(record)
+
+
+def input_expense():
+    while True:
+        try:
+            expense = int(input("請輸入支出："))
+
+        except ValueError:
+            print("輸入無效，請輸入數字。")
+            continue
+
+        if expense < 0:
+            print("輸入無效，支出不能是負數。")
+            continue
+
+        return expense
+
 
 
 def show_records(records):
@@ -49,7 +56,7 @@ def calculate_total(records):
 def delete_record(records):
 
     if len(records) == 0:
-        print("目前沒有任何記帳資料可以刪除")
+        print("目前沒有任何記帳資料可以刪除。")
         return
 
     print("\n所有記帳資料：")
@@ -111,7 +118,7 @@ while True:
         delete_record(records)
 
     elif choice == "5":
-        print("離開程式")
+        print("已離開程式，感謝使用。")
         break
 
     else:
