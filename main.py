@@ -19,7 +19,7 @@ def input_record(records):
 def input_expense():
     while True:
         try:
-            expense = int(input("請輸入支出："))
+            expense = float(input("請輸入支出："))
 
         except ValueError:
             print("輸入無效，請輸入數字。")
