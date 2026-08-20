@@ -36,10 +36,11 @@ def input_expense():
 def show_records(records):
     print("\n所有記帳資料：")
 
-    for record in records:
+    for i, record in enumerate(records):
+        print(f"第 {i + 1} 筆")
         print(f"日期:{record['date']}")
         print(f"類別:{record['category']}")
-        print(f"支出:{record['expense']}")
+        print(f"支出:{format_amount(record['expense'])}元")
         print(f"備註:{record['remark']}")
         print()
 
@@ -53,6 +54,12 @@ def calculate_total(records):
 
     return total
 
+def format_amount(amount):
+    if amount == int(amount):
+        return str(int(amount))
+    else:
+        return str(amount)
+
 def delete_record(records):
 
     if len(records) == 0:
@@ -65,7 +72,7 @@ def delete_record(records):
         print(f"第 {i + 1} 筆")
         print(f"日期:{record['date']}")
         print(f"類別:{record['category']}")
-        print(f"支出:{record['expense']}")
+        print(f"支出：{format_amount(record['expense'])}元")
         print(f"備註:{record['remark']}")
         print()
     while True:
@@ -112,7 +119,7 @@ while True:
 
     elif choice == "3":
         total = calculate_total(records)
-        print(f"總支出:{total}元")
+        print(f"總支出：{format_amount(total)}元")
 
     elif choice == "4":
         delete_record(records)
