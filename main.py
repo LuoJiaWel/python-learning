@@ -1,3 +1,5 @@
+import json
+
 def input_record(records):
     date = input("請輸入日期：")
     category = input("請輸入類別：")
@@ -32,17 +34,20 @@ def input_expense():
         return expense
 
 
+def show_record(record):
+    print(f"日期：{record['date']}")
+    print(f"類別：{record['category']}")
+    print(f"支出：{format_amount(record['expense'])}元")
+    print(f"備註：{record['remark']}")
+    print()
+
 
 def show_records(records):
     print("\n所有記帳資料：")
 
     for i, record in enumerate(records):
         print(f"第 {i + 1} 筆")
-        print(f"日期:{record['date']}")
-        print(f"類別:{record['category']}")
-        print(f"支出:{format_amount(record['expense'])}元")
-        print(f"備註:{record['remark']}")
-        print()
+        show_record(record)
 
 
 def calculate_total(records):
@@ -54,12 +59,6 @@ def calculate_total(records):
 
     return total
 
-def format_amount(amount):
-    if amount == int(amount):
-        return str(int(amount))
-    else:
-        return str(amount)
-
 def delete_record(records):
 
     if len(records) == 0:
@@ -70,11 +69,8 @@ def delete_record(records):
 
     for i, record in enumerate(records):
         print(f"第 {i + 1} 筆")
-        print(f"日期:{record['date']}")
-        print(f"類別:{record['category']}")
-        print(f"支出：{format_amount(record['expense'])}元")
-        print(f"備註:{record['remark']}")
-        print()
+        show_record(record)
+
     while True:
         choice = input("請輸入記帳編號，或按 q 取消刪除：")
 
@@ -89,7 +85,7 @@ def delete_record(records):
             print("請輸入數字。")
             continue
 
-        if choice >= 1 and choice <= len(records):
+        if 1 <= choice <= len(records):
             index = choice - 1
             del records[index]
             print("刪除成功!")
@@ -98,8 +94,26 @@ def delete_record(records):
             print("無效的編號。")
             continue
 
+def format_amount(amount):
+    if amount == int(amount):
+        return str(int(amount))
+    else:
+        return str(amount)
 
-records = []
+    
+
+def load_records():
+    try:
+        with open("records.json", "r") as file:
+            records = json.load(file)
+
+        return records
+
+    except FileNotFoundError:
+        return []
+
+
+records = load_records()
 
 while True:
     print("\n==== 記帳系統 ====")
