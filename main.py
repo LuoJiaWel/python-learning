@@ -63,7 +63,7 @@ def delete_record(records):
 
     if len(records) == 0:
         print("目前沒有任何記帳資料可以刪除。")
-        return
+        return False
 
     print("\n所有記帳資料：")
 
@@ -76,7 +76,7 @@ def delete_record(records):
 
         if choice == "q":
             print("取消刪除。")
-            return
+            return False
 
         try:
             choice = int(choice)
@@ -89,10 +89,11 @@ def delete_record(records):
             index = choice - 1
             del records[index]
             print("刪除成功!")
-            break
+            return True
         else:
             print("無效的編號。")
             continue
+
 
 def format_amount(amount):
     if amount == int(amount):
@@ -100,17 +101,19 @@ def format_amount(amount):
     else:
         return str(amount)
 
-    
 
 def load_records():
     try:
         with open("records.json", "r") as file:
             records = json.load(file)
-
         return records
-
     except FileNotFoundError:
         return []
+
+
+def save_records(records):
+    with open("records.json", "w") as file:
+        json.dump(records, file)
 
 
 records = load_records()
@@ -127,6 +130,7 @@ while True:
 
     if choice == "1":
         input_record(records)
+        save_records(records)
 
     elif choice == "2":
         show_records(records)
@@ -136,7 +140,10 @@ while True:
         print(f"總支出：{format_amount(total)}元")
 
     elif choice == "4":
-        delete_record(records)
+        deleted = delete_record(records)
+
+        if deleted:
+            save_records(records)
 
     elif choice == "5":
         print("已離開程式，感謝使用。")
