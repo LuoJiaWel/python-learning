@@ -115,6 +115,17 @@ def save_records(records):
     with open("records.json", "w") as file:
         json.dump(records, file)
 
+def calculate_category_total(records, category):
+    total = 0
+    found = False
+
+    for record in records:
+        if record["category"] == category:
+            total += record["expense"]
+            found = True
+
+    return total, found
+
 
 records = load_records()
 
@@ -124,7 +135,8 @@ while True:
     print("2. 查看記帳")
     print("3. 查看總支出")
     print("4. 刪除記帳")
-    print("5. 離開")
+    print("5. 查看類別總支出")
+    print("6. 離開")
 
     choice = input("\n請選擇：")
 
@@ -145,9 +157,19 @@ while True:
         if deleted:
             save_records(records)
 
+
     elif choice == "5":
+        category = input("請輸入要查詢的類別：")
+        total, found = calculate_category_total(records, category)
+        if found:
+            print(f"{category}總支出：{format_amount(total)}元")
+        else:
+            print(f"找不到「{category}」的記帳資料。")
+
+    elif choice == "6":
         print("已離開程式，感謝使用。")
         break
+
 
     else:
         print("\n無效的選擇，請重新輸入。")
