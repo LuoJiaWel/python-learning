@@ -126,6 +126,40 @@ def calculate_category_total(records, category):
 
     return total, found
 
+def get_categories(records):
+    caregories = set()
+
+    for record in records:
+        caregories.add(record["category"])
+
+    return caregories
+
+def choose_category(records):
+    if len(records) == 0:
+        print("目前沒有任何記帳資料。")
+        return None
+
+    categories = sorted(get_categories(records))
+
+    print("\n目前的類別：")
+
+    for i, category in enumerate(categories):
+        print(f"{i + 1}. {category}")
+
+    while True:
+        choice = input("請選擇類別：")
+
+        try:
+            choice = int(choice)
+        except ValueError:
+            print("請輸入數字。")
+            continue
+        if 1 <= choice <= len(categories):
+            index = choice - 1
+            return categories[index]
+        else:
+            print("無效的選擇。")
+
 
 records = load_records()
 
@@ -159,12 +193,18 @@ while True:
 
 
     elif choice == "5":
-        category = input("請輸入要查詢的類別：")
+        category = choose_category(records)
+
+        if category is None:
+            continue
+
         total, found = calculate_category_total(records, category)
+
         if found:
             print(f"{category}總支出：{format_amount(total)}元")
         else:
             print(f"找不到「{category}」的記帳資料。")
+
 
     elif choice == "6":
         print("已離開程式，感謝使用。")
