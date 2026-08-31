@@ -1,5 +1,6 @@
 import json
 
+#資料輸入
 def input_record(records):
     date = input("請輸入日期：")
     category = input("請輸入類別：")
@@ -17,7 +18,7 @@ def input_record(records):
 
     records.append(record)
 
-
+#資料輸入
 def input_expense():
     while True:
         try:
@@ -33,7 +34,7 @@ def input_expense():
 
         return expense
 
-
+#資料顯示
 def show_record(record):
     print(f"日期：{record['date']}")
     print(f"類別：{record['category']}")
@@ -41,7 +42,7 @@ def show_record(record):
     print(f"備註：{record['remark']}")
     print()
 
-
+#資料顯示
 def show_records(records):
     print("\n所有記帳資料：")
 
@@ -49,7 +50,7 @@ def show_records(records):
         print(f"第 {i + 1} 筆")
         show_record(record)
 
-
+#資料計算
 def calculate_total(records):
 
     total = 0
@@ -58,7 +59,7 @@ def calculate_total(records):
         total += record["expense"]
 
     return total
-
+#資料計算
 def calculate_category_total(records, category):
     total = 0
     found = False
@@ -70,7 +71,7 @@ def calculate_category_total(records, category):
 
     return total, found
 
-
+#資料操作
 def delete_record(records):
 
     if len(records) == 0:
@@ -107,73 +108,18 @@ def delete_record(records):
             continue
 
 
-def format_amount(amount):
-    if amount == int(amount):
-        return str(int(amount))
-    else:
-        return str(amount)
-
-
-def get_categories(records):
-    caregories = set()
-
-    for record in records:
-        caregories.add(record["category"])
-
-    return caregories
-
-def choose_category(records):
-    if len(records) == 0:
-        print("目前沒有任何記帳資料。")
-        return None
-
-    categories = sorted(get_categories(records))
-
-    print("\n目前的類別：")
-
-    for i, category in enumerate(categories):
-        print(f"{i + 1}. {category}")
-
-    while True:
-        choice = input("請選擇類別：")
-
-        try:
-            choice = int(choice)
-        except ValueError:
-            print("請輸入數字。")
-            continue
-        if 1 <= choice <= len(categories):
-            index = choice - 1
-            return categories[index]
-        else:
-            print("無效的選擇。")
-
-
-def load_records():
-    try:
-        with open("records.json", "r") as file:
-            records = json.load(file)
-        return records
-    except FileNotFoundError:
-        return []
-
-
-def save_records(records):
-    with open("records.json", "w") as file:
-        json.dump(records, file)
-
-
-
+# 資料操作
 def edit_record(records):
 
     if len(records) == 0:
         print("目前沒有任何記帳資料可以修改。")
+        return False
 
     print("\n所有記帳資料：")
 
     for i,record in enumerate(records):
-        print(f"第{i + 1}筆")
-        show_records(record)
+        print(f"第 {i + 1} 筆")
+        show_record(record)
         print()
 
     while True:
@@ -234,6 +180,64 @@ def edit_record(records):
 
         else:
             print("無效的選擇。")
+
+#資料操作
+def get_categories(records):
+    categories  = set()
+
+    for record in records:
+        categories .add(record["category"])
+
+    return categories
+
+#資料操作
+def choose_category(records):
+    if len(records) == 0:
+        print("目前沒有任何記帳資料。")
+        return None
+
+    categories = sorted(get_categories(records))
+
+    print("\n目前的類別：")
+
+    for i, category in enumerate(categories):
+        print(f"{i + 1}. {category}")
+
+    while True:
+        choice = input("請選擇類別：")
+
+        try:
+            choice = int(choice)
+        except ValueError:
+            print("請輸入數字。")
+            continue
+        if 1 <= choice <= len(categories):
+            index = choice - 1
+            return categories[index]
+        else:
+            print("無效的選擇。")
+
+
+#資料格式
+def format_amount(amount):
+    if amount == int(amount):
+        return str(int(amount))
+    else:
+        return str(amount)
+
+#資料儲存
+def load_records():
+    try:
+        with open("records.json", "r") as file:
+            records = json.load(file)
+        return records
+    except FileNotFoundError:
+        return []
+
+#資料儲存
+def save_records(records):
+    with open("records.json", "w") as file:
+        json.dump(records, file)
 
 
 records = load_records()
