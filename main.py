@@ -59,6 +59,18 @@ def calculate_total(records):
 
     return total
 
+def calculate_category_total(records, category):
+    total = 0
+    found = False
+
+    for record in records:
+        if record["category"] == category:
+            total += record["expense"]
+            found = True
+
+    return total, found
+
+
 def delete_record(records):
 
     if len(records) == 0:
@@ -102,30 +114,6 @@ def format_amount(amount):
         return str(amount)
 
 
-def load_records():
-    try:
-        with open("records.json", "r") as file:
-            records = json.load(file)
-        return records
-    except FileNotFoundError:
-        return []
-
-
-def save_records(records):
-    with open("records.json", "w") as file:
-        json.dump(records, file)
-
-def calculate_category_total(records, category):
-    total = 0
-    found = False
-
-    for record in records:
-        if record["category"] == category:
-            total += record["expense"]
-            found = True
-
-    return total, found
-
 def get_categories(records):
     caregories = set()
 
@@ -161,6 +149,93 @@ def choose_category(records):
             print("無效的選擇。")
 
 
+def load_records():
+    try:
+        with open("records.json", "r") as file:
+            records = json.load(file)
+        return records
+    except FileNotFoundError:
+        return []
+
+
+def save_records(records):
+    with open("records.json", "w") as file:
+        json.dump(records, file)
+
+
+
+def edit_record(records):
+
+    if len(records) == 0:
+        print("目前沒有任何記帳資料可以修改。")
+
+    print("\n所有記帳資料：")
+
+    for i,record in enumerate(records):
+        print(f"第{i + 1}筆")
+        show_records(record)
+        print()
+
+    while True:
+        choice = input("請輸入要修改的記帳編號，或按 q 取消：")
+
+        if choice == "q":
+            print("取消修改。")
+            return False
+
+        try:
+            choice = int(choice)
+
+        except ValueError:
+            print("請輸入數字。")
+            continue
+
+        if 1 <= choice <= len(records):
+            index = choice - 1
+            record = records[index]
+            break
+
+        else:
+            print("無效的編號。")
+
+    while True:
+        print("\n要修改什麼？")
+        print("1. 日期")
+        print("2. 類別")
+        print("3. 支出")
+        print("4. 備註")
+        print("5. 取消")
+
+        choice = input("請選擇：")
+
+        if choice == "1":
+            record["date"] = input("請輸入新的日期：")
+            print("修改成功！")
+            return True
+
+        elif choice == "2":
+            record["category"] = input("請輸入新的類別：")
+            print("修改成功！")
+            return True
+
+        elif choice == "3":
+            record["expense"] = input_expense()
+            print("修改成功！")
+            return True
+
+        elif choice == "4":
+            record["remark"] = input("請輸入新的備註：")
+            print("修改成功！")
+            return True
+
+        elif choice == "5":
+            print("取消修改。")
+            return False
+
+        else:
+            print("無效的選擇。")
+
+
 records = load_records()
 
 while True:
@@ -170,7 +245,8 @@ while True:
     print("3. 查看總支出")
     print("4. 刪除記帳")
     print("5. 查看類別總支出")
-    print("6. 離開")
+    print("6. 修改記帳")
+    print("7. 離開")
 
     choice = input("\n請選擇：")
 
@@ -205,8 +281,14 @@ while True:
         else:
             print(f"找不到「{category}」的記帳資料。")
 
-
     elif choice == "6":
+        modified = edit_record(records)
+
+        if modified:
+            save_records(records)
+
+
+    elif choice == "7":
         print("已離開程式，感謝使用。")
         break
 
