@@ -3,6 +3,8 @@ from storage import load_records, save_records
 #utils翻譯成工具
 from utils import format_amount
 
+from database import add_record, get_records
+
 from record import (
     input_record,
     show_records,
@@ -76,4 +78,5 @@ if __name__ == "__main__":
         else:
             print("\n無效的選擇，請重新輸入。")
 
-print("feature-test")
+
+
