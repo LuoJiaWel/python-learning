@@ -1,6 +1,6 @@
-from database import add_record, get_records
+from database import get_records, update_record
 
-add_record("2026-09-18", "早餐", 60, "蛋餅")
+update_record(1, "2026/9/21", "food", 200, "修改測試")
 
 records = get_records()
 

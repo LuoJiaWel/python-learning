@@ -1,9 +1,12 @@
-#storage.py裡面放的是儲存和讀取，storage翻譯成儲存
-from storage import load_records, save_records
+from database import (
+    add_record,
+    get_records,
+    update_record,
+    delete_record_from_database
+)
+
 #utils翻譯成工具
 from utils import format_amount
-
-from database import add_record, get_records
 
 from record import (
     input_record,
@@ -16,8 +19,6 @@ from record import (
 )
 
 if __name__ == "__main__":
-    #取得儲存後的json檔案
-    records = load_records()
 
     #主程式_主要操作地方
     while True:
@@ -33,24 +34,28 @@ if __name__ == "__main__":
         choice = input("\n請選擇：")
 
         if choice == "1":
-            input_record(records)
-            save_records(records)
+            date, category, expense, remark = input_record()
+            add_record(date, category, expense, remark)
 
         elif choice == "2":
+            records = get_records()
             show_records(records)
 
         elif choice == "3":
+            records = get_records()
             total = calculate_total(records)
             print(f"總支出：{format_amount(total)}元")
 
         elif choice == "4":
+            records = get_records()
             deleted = delete_record(records)
 
-            if deleted:
-                save_records(records)
+            if deleted is not None:
+                delete_record_from_database(deleted["id"])
 
 
         elif choice == "5":
+            records = get_records()
             category = choose_category(records)
 
             if category is None:
@@ -64,10 +69,17 @@ if __name__ == "__main__":
                 print(f"找不到「{category}」的記帳資料。")
 
         elif choice == "6":
+            records = get_records()
             modified = edit_record(records)
 
-            if modified:
-                save_records(records)
+            if modified is not None:
+                update_record(
+                    modified["id"],
+                    modified["date"],
+                    modified["category"],
+                    modified["expense"],
+                    modified["remark"]
+                )
 
 
         elif choice == "7":
