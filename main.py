@@ -2,7 +2,9 @@ from database import (
     add_record,
     get_records,
     update_record,
-    delete_record_from_database
+    delete_record_from_database,
+    get_total_expense,
+    get_category_total
 )
 
 #utils翻譯成工具
@@ -11,9 +13,7 @@ from utils import format_amount
 from record import (
     input_record,
     show_records,
-    calculate_total,
     delete_record,
-    calculate_category_total,
     choose_category,
     edit_record
 )
@@ -42,8 +42,7 @@ if __name__ == "__main__":
             show_records(records)
 
         elif choice == "3":
-            records = get_records()
-            total = calculate_total(records)
+            total = get_total_expense()
             print(f"總支出：{format_amount(total)}元")
 
         elif choice == "4":
@@ -61,12 +60,8 @@ if __name__ == "__main__":
             if category is None:
                 continue
 
-            total, found = calculate_category_total(records, category)
-
-            if found:
-                print(f"{category}總支出：{format_amount(total)}元")
-            else:
-                print(f"找不到「{category}」的記帳資料。")
+            total = get_category_total(category)
+            print(f"{category}總支出：{format_amount(total)}元")
 
         elif choice == "6":
             records = get_records()

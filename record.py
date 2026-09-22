@@ -43,28 +43,6 @@ def show_records(records):
         print(f"第 {i + 1} 筆")
         show_record(record)
 
-#負責計算總額
-def calculate_total(records):
-
-    total = 0
-
-    for record in records:
-        total += record["expense"]
-
-    return total
-
-#負責計算「類別的總額」並回傳結果
-def calculate_category_total(records, category):
-    total = 0
-    found = False
-
-    for record in records:
-        if record["category"] == category:
-            total += record["expense"]
-            found = True
-
-    return total, found
-
 #刪除紀錄
 def delete_record(records):
 

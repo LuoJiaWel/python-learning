@@ -1,7 +1,7 @@
-from database import get_records, update_record
+from database import get_total_expense, get_category_total
 
-update_record(1, "2026/9/21", "food", 200, "修改測試")
+total = get_total_expense()
+print(f"總支出：{total}")
 
-records = get_records()
-
-print(records)
+breakfast_total = get_category_total("早餐")
+print(f"早餐：{breakfast_total}")

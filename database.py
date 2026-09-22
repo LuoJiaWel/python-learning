@@ -60,3 +60,20 @@ def delete_record_from_database(record_id):
 
     connection.commit()
 #----------------------------------------------------------------
+def get_total_expense():
+    result = connection.execute("""
+    SELECT SUM(expense)
+    FROM records
+    """).fetchone()
+
+    return result[0] or 0
+#----------------------------------------------------------------
+def get_category_total(category):
+    result = connection.execute("""
+    SELECT SUM(expense)
+    FROM records
+    WHERE category = ?
+    """, (category,)).fetchone()
+
+    return result[0] or 0
+#----------------------------------------------------------------
