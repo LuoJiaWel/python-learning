@@ -57,7 +57,8 @@ def delete_record_from_database(record_id):
     DELETE FROM records
     WHERE id = ?
     """, (record_id,))
-
+#關於(record_id,))，因為WHERE id = ? 這裡只有一個 ?，所以tuple(元組)就提供一個引數，
+#可以參考update_record()的WHERE id = ? 它接收了四個 ? 引數
     connection.commit()
 #----------------------------------------------------------------
 def get_total_expense():
