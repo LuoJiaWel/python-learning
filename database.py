@@ -31,10 +31,10 @@ def get_records():
     records = []
 
     for record in result:
-        id, date, category, expense, remark = record
+        record_id, date, category, expense, remark = record
 
         records.append({
-            "id": id,
+            "id": record_id,
             "date": date,
             "category": category,
             "expense": expense,
@@ -78,3 +78,4 @@ def get_category_total(category):
 
     return result[0] or 0
 #----------------------------------------------------------------
+initialize_database()
