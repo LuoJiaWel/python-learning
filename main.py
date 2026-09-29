@@ -49,8 +49,10 @@ if __name__ == "__main__":
             records = get_records()
             deleted = delete_record(records)
 
+
             if deleted is not None:
                 delete_record_from_database(deleted["id"])
+                print("刪除成功！")
 
 
         elif choice == "5":
@@ -75,6 +77,7 @@ if __name__ == "__main__":
                     modified["expense"],
                     modified["remark"]
                 )
+                print("修改成功！")
 
 
         elif choice == "7":

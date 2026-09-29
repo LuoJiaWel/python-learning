@@ -50,11 +50,7 @@ def delete_record(records):
         print("目前沒有任何記帳資料可以刪除。")
         return None
 
-    print("\n所有記帳資料：")
-
-    for i, record in enumerate(records):
-        print(f"第 {i + 1} 筆")
-        show_record(record)
+    show_records(records)
 
     while True:
         choice = input("請輸入記帳編號，或按 q 取消刪除：")
@@ -73,17 +69,13 @@ def delete_record(records):
         if 1 <= choice <= len(records):
             index = choice - 1
             record = records[index]
-
-            del records[index]
-
-            print("刪除成功！")
             return record
         else:
             print("無效的編號。")
             continue
 
 
-# 選擇要要編輯的紀錄
+# 選擇要編輯的紀錄
 def edit_record(records):
 
     if len(records) == 0:
@@ -131,22 +123,18 @@ def edit_record(records):
 
         if choice == "1":
             record["date"] = input("請輸入新的日期：")
-            print("修改成功！")
             return record
 
         elif choice == "2":
             record["category"] = input("請輸入新的類別：")
-            print("修改成功！")
             return record
 
         elif choice == "3":
             record["expense"] = input_expense()
-            print("修改成功！")
             return record
 
         elif choice == "4":
             record["remark"] = input("請輸入新的備註：")
-            print("修改成功！")
             return record
 
         elif choice == "5":
