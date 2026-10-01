@@ -78,4 +78,7 @@ def get_category_total(category):
 
     return result[0] or 0
 #----------------------------------------------------------------
-initialize_database()
+initialize_database() #名叫初始化資料庫
+#----------------------------------------------------------------
+def close_database():
+    connection.close()

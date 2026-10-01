@@ -144,23 +144,23 @@ def edit_record(records):
         else:
             print("無效的選擇。")
 
-#取得「不重複類別」_使用了set()
+#取得「不重複類別」_使用了內建函式 set()
 def get_categories(records):
-    categories  = set()
+    categories  = set()  #set()意指相同的值只保留一份。
 
     for record in records:
         categories.add(record["category"])
 
     return categories
 
-#資料排序_使用了sorted()
+#資料排序_使用了內建函式 sorted()
 def choose_category(records):
     if len(records) == 0:
         print("目前沒有任何記帳資料。")
         return None
 
     categories = sorted(get_categories(records))
-
+    # sorted()意指進行排序
     print("\n目前的類別：")
 
     for i, category in enumerate(categories):
@@ -174,7 +174,7 @@ def choose_category(records):
         except ValueError:
             print("請輸入數字。")
             continue
-        if 1 <= choice <= len(categories):
+        if 1 <= choice <= len(categories):  #len()是內建函式，用來取括弧內項目數量，括弧內是資料來源
             index = choice - 1
             return categories[index]
         else:

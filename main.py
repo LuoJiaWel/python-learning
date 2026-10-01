@@ -4,7 +4,8 @@ from database import (
     update_record,
     delete_record_from_database,
     get_total_expense,
-    get_category_total
+    get_category_total,
+    close_database
 )
 
 #utils翻譯成工具
@@ -18,9 +19,7 @@ from record import (
     edit_record
 )
 
-if __name__ == "__main__":
-
-    #主程式_主要操作地方
+def main():
     while True:
         print("\n==== 記帳系統 ====")
         print("1. 新增記帳")
@@ -49,11 +48,9 @@ if __name__ == "__main__":
             records = get_records()
             deleted = delete_record(records)
 
-
             if deleted is not None:
                 delete_record_from_database(deleted["id"])
                 print("刪除成功！")
-
 
         elif choice == "5":
             records = get_records()
@@ -79,14 +76,16 @@ if __name__ == "__main__":
                 )
                 print("修改成功！")
 
-
         elif choice == "7":
             print("已離開程式，感謝使用。")
             break
 
-
         else:
             print("\n無效的選擇，請重新輸入。")
 
-
+if __name__ == "__main__":
+    try:
+        main()
+    finally:  #finally : 不管 main() 是正常結束，還是發生 Exception，finally 都會執行。
+        close_database()
 
