@@ -8,8 +8,7 @@ from database import (
     close_database
 )
 
-#utils翻譯成工具
-from utils import format_amount
+from tool import format_amount
 
 from record import (
     input_record,

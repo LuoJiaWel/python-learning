@@ -1,4 +1,4 @@
-from utils import format_amount
+from tool import format_amount
 
 #負責給使用者輸入資料
 def input_record():
