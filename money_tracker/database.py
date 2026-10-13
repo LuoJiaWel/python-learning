@@ -1,6 +1,6 @@
 import sqlite3
 
-connection = sqlite3.connect("money_tracker.db")
+connection = sqlite3.connect("../money_tracker.db")
 #----------------------------------------------------------------
 def initialize_database():
     connection.execute("""

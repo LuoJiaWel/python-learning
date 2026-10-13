@@ -1,4 +1,4 @@
-from tool import format_amount
+from money_tracker.tool import format_amount
 
 #負責給使用者輸入資料
 def input_record():
@@ -11,7 +11,7 @@ def input_record():
 
     return date, category, expense, remark
 
-#輸入支出
+#處理輸入支出
 def input_expense():
     while True:
         try:

@@ -1,4 +1,4 @@
-from database import (
+from money_tracker.database import (
     add_record,
     get_records,
     update_record,
@@ -7,10 +7,11 @@ from database import (
     get_category_total,
     close_database
 )
+#from money_tracker.tool import format_amount << absolute import 絕對匯入
+#from .tool import format_amount << relative import 相對匯入
+from money_tracker.tool import format_amount
 
-from tool import format_amount
-
-from record import (
+from money_tracker.record import (
     input_record,
     show_records,
     delete_record,
